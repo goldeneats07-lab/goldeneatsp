@@ -1,0 +1,110 @@
+/* Global + Background */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, Arial, sans-serif;
+  color: #222;
+  background: linear-gradient(135deg, #f9d423, #ff4e50);
+}
+
+/* Header + nav */
+.app-header { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px; padding:12px 16px; background: rgba(255,255,255,0.85); }
+.app-header h1 { margin:0; }
+.top-nav button {
+  margin: 4px; padding: 8px 12px; border: none; border-radius: 10px;
+  background:#ff4e50; color:#fff; font-weight:600; cursor:pointer;
+}
+.top-nav button:hover { background:#f9d423; color:#000; }
+
+/* Pages */
+.page { padding: 14px; }
+.hidden { display: none; }
+
+/* Cards + stats */
+.stats { display:flex; flex-wrap:wrap; gap:12px; }
+.card {
+  flex:1 1 180px; background:#fff; border-radius:16px; padding:16px; text-align:center;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+.filter-row { display:flex; flex-wrap:wrap; align-items:center; gap:12px; }
+
+/* Forms */
+.form {
+  background:#fff; border-radius:16px; padding:14px; margin: 12px 0;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+.form label { display:block; margin:8px 0; font-weight:700; }
+.form input, .form textarea, .form select {
+  width:100%; padding:10px; border:1px solid #ddd; border-radius:10px; font-weight:600;
+  background:#fff;
+}
+.form .row { display:flex; gap:10px; flex-wrap:wrap; }
+.form button {
+  background:#ff4e50; color:#fff; border:none; padding:10px 14px; border-radius:12px; cursor:pointer; font-weight:700;
+}
+.form button.secondary { background:#eee; color:#000; }
+
+/* Tables */
+table { width:100%; border-collapse: collapse; background:#fff; border-radius:14px; overflow:hidden; }
+th, td { padding:10px; border-bottom:1px solid #eee; text-align:center; }
+th { background:#fafafa; font-weight:800; }
+
+/* POS 3‑panel layout */
+#pos { display:flex; gap:12px; height:75vh; }
+.sidebar, .products, .cart {
+  background: rgba(255,255,255,0.92); border-radius:16px; padding:12px; overflow:auto;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+.sidebar { flex: 1 1 200px; }
+.products { flex: 2 1 420px; }
+.cart     { flex: 1.2 1 260px; }
+
+ul { list-style:none; padding:0; margin:0; }
+ul li {
+  background:#fff; border:1px solid #eee; border-radius:12px; padding:10px; margin:6px 0;
+  text-align:center; font-weight:700; cursor:pointer;
+}
+ul li:hover { background:#ffe3b5; }
+
+.search { width:100%; margin-bottom:10px; }
+
+.grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap:12px;
+}
+.product-card {
+  background:#fff; border:1px solid #eee; border-radius:16px; padding:10px; text-align:center; cursor:pointer;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+}
+.product-card img { width:100%; height:110px; object-fit:cover; border-radius:12px; }
+.product-card h4 { margin:8px 0 4px; }
+.product-card p  { margin:0; }
+
+button, .btn {
+  background:#ff4e50; color:#fff; border:none; padding:8px 12px; border-radius:12px; font-weight:800; cursor:pointer;
+}
+button:hover { background:#f9d423; color:#000; }
+button.secondary { background:#eee; color:#000; }
+
+.checkout { margin-top:10px; display:flex; flex-direction:column; gap:8px; }
+
+/* Invoice host + receipts */
+.invoice-host { margin-top:10px; }
+.print-zone { position:absolute; left:-9999px; top:-9999px; } /* hide printable nodes */
+.receipt {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px; color:#000; background:#fff; padding:6px 6px; line-height:1.35;
+  border:1px dashed #bbb;
+}
+.receipt-58 { width: 48mm; } /* typical printable width on 58mm paper */
+.receipt-80 { width: 72mm; } /* typical printable width on 80mm paper */
+.receipt .center { text-align:center; }
+.receipt .row { display:flex; justify-content:space-between; }
+.receipt hr { border: none; border-top: 1px dashed #999; margin:6px 0; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  #pos { flex-direction:column; height:auto; }
+  .sidebar, .products, .cart { flex:unset; }
+}

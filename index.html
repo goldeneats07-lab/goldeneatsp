@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Untitled</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Golden Eats POS</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <h1><b>🍽️ Golden Eats POS</b></h1>
+      <small><b>Email:</b> goldeneats07@gmail.com • <b>Phone:</b> +251-907453590 • <b>Location:</b> Addis Ababa, Oromia, Baale Dallo‑Manna</small>
+    </div>
+    <nav class="top-nav">
+      <button onclick="showSection('dashboard')">Dashboard</button>
+      <button onclick="showSection('admins')">Admins</button>
+      <button onclick="showSection('customers')">Customers</button>
+      <button onclick="showSection('categories')">Categories</button>
+      <button onclick="showSection('products')">Products</button>
+      <button onclick="showSection('orders')">Orders</button>
+      <button onclick="showSection('pos')">POS Terminal</button>
+    </nav>
+  </header>
+
+  <!-- DASHBOARD -->
+  <section id="dashboard" class="page">
+    <h2><b>📊 Dashboard</b></h2>
+    <div class="stats">
+      <div class="card">Total Admins: <b id="totalAdmins">0</b></div>
+      <div class="card">Total Customers: <b id="totalCustomers">0</b></div>
+      <div class="card">Total Categories: <b id="totalCategories">0</b></div>
+      <div class="card">Total Products: <b id="totalProducts">0</b></div>
+      <div class="card">Today’s Orders: <b id="todayOrders">0</b></div>
+      <div class="card">Total Orders: <b id="totalOrders">0</b></div>
+    </div>
+    <div class="card filter-row">
+      <label><b>Select date (dd-mm-yyyy):</b>
+        <input type="date" id="dashDate"/>
+      </label>
+      <button onclick="countOrdersByDate()">Refresh</button>
+    </div>
+  </section>
+
+  <!-- ADMINS -->
+  <section id="admins" class="page hidden">
+    <h2><b>👨‍💼 Admins</b></h2>
+    <form id="adminForm" onsubmit="addAdmin(event)" class="form">
+      <label><b>Name</b><input id="adminName" type="text" required></label>
+      <label><b>Email</b><input id="adminEmail" type="email" required></label>
+      <label><b>Password</b><input id="adminPass" type="password" required></label>
+      <label><b>Phone</b><input id="adminPhone" type="tel" placeholder="+251-..."></label>
+      <div class="row">
+        <button type="submit">Submit</button>
+        <button type="reset">Back</button>
+      </div>
+    </form>
+    <table>
+      <thead>
+        <tr>
+          <th>Id</th><th>Name</th><th>Email</th><th>Phone</th><th>Is Active</th><th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="adminList"></tbody>
+    </table>
+  </section>
+
+  <!-- CUSTOMERS -->
+  <section id="customers" class="page hidden">
+    <h2><b>👥 Customers</b></h2>
+    <form id="customerForm" onsubmit="addCustomer(event)" class="form">
+      <label><b>Name</b><input id="custName" type="text" required></label>
+      <label><b>Email</b><input id="custEmail" type="email"></label>
+      <label><b>Phone</b><input id="custPhone" type="tel" placeholder="+251-..."></label>
+      <label class="check"><input id="custActive" type="checkbox"> <b>Is Active</b></label>
+      <button type="submit">Submit</button>
+    </form>
+    <table>
+      <thead>
+        <tr>
+          <th>Id</th><th>Name</th><th>Email</th><th>Phone</th><th>Is Active</th><th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="customerList"></tbody>
+    </table>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section id="categories" class="page hidden">
+    <h2><b>📂 Categories</b></h2>
+    <form id="categoryForm" onsubmit="addCategory(event)" class="form">
+      <label><b>Category Name</b><input id="catName" type="text" required></label>
+      <label><b>Description</b><textarea id="catDesc"></textarea></label>
+      <label class="check"><input id="catHidden" type="checkbox"> <b>Status:</b> Checked = Hidden, Unchecked = Visible</label>
+      <div class="row">
+        <button type="submit">Save</button>
+        <button type="reset">Back</button>
+      </div>
+    </form>
+    <table>
+      <thead>
+        <tr>
+          <th>Id</th><th>Name</th><th>Status</th><th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="categoryList"></tbody>
+    </table>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section id="products" class="page hidden">
+    <h2><b>🍔 Products</b></h2>
+    <form id="productForm" onsubmit="addProduct(event)" class="form">
+      <label><b>Select Category</b>
+        <select id="prodCat" required></select>
+      </label>
+      <label><b>Name</b><input id="prodName" type="text" required></label>
+      <label><b>Description</b><textarea id="prodDesc"></textarea></label>
+      <label><b>Price</b><input id="prodPrice" type="number" min="0" step="0.01" required></label>
+      <label><b>Quantity</b><input id="prodQty" type="number" min="0" step="1" required></label>
+      <label><b>Image</b><input id="prodImg" type="file" accept="image/*"></label>
+      <label class="check"><input id="prodHidden" type="checkbox"> <b>Status:</b> Checked = Hidden, Unchecked = Visible</label>
+      <div class="row">
+        <button type="submit">Save</button>
+      </div>
+    </form>
+    <table>
+      <thead>
+        <tr>
+          <th>Id</th><th>Image</th><th>Name</th><th>Category</th><th>Price</th><th>Qty</th><th>Status</th><th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="productList"></tbody>
+    </table>
+  </section>
+
+  <!-- ORDERS -->
+  <section id="orders" class="page hidden">
+    <h2><b>📦 Orders</b></h2>
+    <div class="card filter-row">
+      <label><b>Date</b> <input type="date" id="orderFilterDate"></label>
+      <label><b>Status</b>
+        <select id="orderFilterStatus">
+          <option value="">All</option>
+          <option>Paid</option>
+          <option>Pending</option>
+          <option>Cancelled</option>
+        </select>
+      </label>
+      <label><b>Payment</b>
+        <select id="orderFilterPayment">
+          <option value="">All</option>
+          <option>Cash</option>
+          <option>Card</option>
+          <option>Tele Birr</option>
+          <option>E-birr</option>
+          <option>Online</option>
+        </select>
+      </label>
+      <div class="row">
+        <button onclick="renderOrders()">Filter</button>
+        <button onclick="resetOrderFilters()">Reset</button>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Si No</th><th>Tracking No</th><th>Name</th><th>Phone</th>
+          <th>Order Date</th><th>Order Status</th><th>Payment Status</th><th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="orderList"></tbody>
+    </table>
+  </section>
+
+  <!-- POS TERMINAL: Sidebar + Grid + Cart -->
+  <section id="pos" class="page hidden">
+    <aside class="sidebar">
+      <h3><b>🍱 Categories</b></h3>
+      <ul id="posCategories"></ul>
+    </aside>
+
+    <main class="products">
+      <h3><b>🍔 Menu</b></h3>
+      <input id="productSearch" class="search" placeholder="Search products..." oninput="searchProducts(this.value)"/>
+      <div id="productGrid" class="grid"></div>
+    </main>
+
+    <aside class="cart">
+      <h3><b>🛒 Cart & Checkout</b></h3>
+      <table id="cartTable">
+        <thead>
+          <tr><th>Item</th><th>Qty</th><th>Price</th><th>Subtotal</th><th>Action</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="checkout">
+        <p><b>Total:</b> <b id="cartTotal">0</b> Birr</p>
+        <label><b>Payment Mode</b>
+          <select id="paymentMode">
+            <option>Cash</option><option>Card</option><option>Tele Birr</option><option>E-birr</option><option>Online</option>
+          </select>
+        </label>
+        <label><b>Customer Phone (optional)</b>
+          <input id="orderPhone" type="tel" placeholder="+251-...">
+        </label>
+        <label><b>⏰ Pickup/Delivery Time</b>
+          <input id="orderTime" type="time"> <small>Time will display beside the order</small>
+        </label>
+        <div class="row">
+          <button onclick="checkout()">Proceed to Place Order</button>
+          <button class="secondary" onclick="clearCart()">Clear Cart</button>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- INVOICE / RECEIPT -->
+  <section id="invoice" class="page hidden">
+    <h2><b>🧾 Invoice</b></h2>
+    <div class="row">
+      <button onclick="printReceipt('58')">Print 58mm</button>
+      <button onclick="printReceipt('80')">Print 80mm</button>
+      <button class="secondary" onclick="showSection('pos')">Back to Create Order</button>
+    </div>
+
+    <!-- Rendered invoice content -->
+    <div id="invoiceContent" class="invoice-host"></div>
+
+    <!-- Hidden printable templates -->
+    <div id="printArea" class="print-zone">
+      <div id="receipt58" class="receipt receipt-58"></div>
+      <div id="receipt80" class="receipt receipt-80"></div>
+    </div>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>
+<!-- partial -->
+  <script  src="./script.js"></script>
+
+</body>
+</html>
